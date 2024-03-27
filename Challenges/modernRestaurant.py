@@ -1,18 +1,16 @@
 n = int(input())
 
-foods = ['burger', 'fries potato', 'hotdog', 'pizza']
+foods = ['pizza', 'burger', 'fries potato', 'hotdog']
 
 idx = 0
+cnt = 0
 ans = []
+
 for i in range(n):
-    if i + n >= len(foods):
-        ans.append(foods[idx])
-        idx += 1
-        if idx >= len(foods):
-            idx = 0
-
-
-    else:
-        ans.append(foods[i + n])
-
+    if cnt >= len(foods):
+        idx = 0
+        cnt = 0
+    ans.append(foods[idx])
+    cnt += 1
+    idx += 1
 print('\n'.join(ans))
