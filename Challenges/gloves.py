@@ -1,3 +1,3 @@
 gloves = list(map(int, input().split()))
-
-print(sum(gloves) - 1)
+gloves.remove(min(gloves))
+print(sum(gloves) + 2)
