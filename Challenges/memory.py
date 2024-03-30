@@ -68,7 +68,11 @@ def nop(args):
 
 
 def jump(args):
-    return 'jump', *args
+    j = int(args[0]) - 1
+    if registers['$r5'] > 0:
+        for cmd in commands[j:]:
+            func = method_dict.get(cmd[0])
+            func(cmd[1:])
 
 
 method_dict = {'push': push,
@@ -84,5 +88,5 @@ method_dict = {'push': push,
 
 for command in commands:
     method = method_dict.get(command[0])
-    res = method(command[1:])
+    method(command[1:])
 print(''.join([chr(a) for a in ans]))
