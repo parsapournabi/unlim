@@ -1,38 +1,29 @@
 n = int(input())
 prices = []
 
-for i in range(n):
-    # price = list(map(int, input().split()))
-    if i < 1999:
-        price = [10 for w in range(7)]
-    else:
-        print(i)
-        prices = [70 for w in range(7)]
-    for p in price:
-        prices.append(p)
+for _ in range(n):
+    week_prices = list(map(int, input().split()))
+    prices.extend(week_prices)
 
-if sum(prices) // len(prices) == prices[0]:
-    print('No profit no loss')
-    exit()
 
-print(prices)
+def max_profit(prices):
+    n = len(prices)
+    if n == 0:
+        return 0
 
-if prices.index(max(prices)) == 0:
-    for ii in range(2000):
-        if prices.index(max(prices)) != 0:
-            break
-        else:
-            prices.pop(0)
+    max_profit = [0] * n
+    min_price = [0] * n
+    min_price[0] = prices[0]
 
-if not prices:
-    print('No profit no loss')
-    exit()
+    for i in range(1, n):
+        min_price[i] = min(min_price[i - 1], prices[i])
+        max_profit[i] = max(max_profit[i - 1], prices[i] - min_price[i])
 
-max_price_idx = prices.index(max(prices))
-if prices.count(max(prices)) > 1:
-    max_price_idx = (len(prices) - 1) - prices[::-1].index(max(prices))
-sort_prices = sorted(prices[:max_price_idx + 1])
-if profit := (sort_prices[-1] - sort_prices[0]):
-    print(profit)
+    return max_profit[-1]
+
+
+max_profit = max_profit(prices)
+if max_profit > 0:
+    print(max_profit)
 else:
-    print('No profit no loss')
+    print("No profit no loss")
