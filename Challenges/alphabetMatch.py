@@ -1,20 +1,23 @@
 words = input().split()
 
 ans = []
+used = []
 
-for iw, word in enumerate(words):
-    inside = []
-    for iiw, w in enumerate(words):
-        if iiw == iw or len(w) != len(word):
+for i, word in enumerate(words):
+    semi_ans = [word]
+    if word in used:
+        continue
+    for ii, w in enumerate(words[i + 1:]):
+        if len(word) != len(w):
             continue
-        for char, c in zip(word, w):
-            if char not in w or c not in word:
+        for char in word:
+            if char not in w or w.count(char) != word.count(char):
                 break
         else:
-            if word not in ' '.join(ans) and w not in ' '.join(ans):
-                inside.append(w)
-    if inside:
-            ans.append(f'{word} {" ".join([i for i in inside])}')
+            semi_ans.append(w)
+    if len(semi_ans) > 1:
+        ans.append(semi_ans)
+        for ww in semi_ans:
+            used.append(ww)
 
-print('\n'.join(ans))
-
+print('\n'.join([' '.join(a) for a in ans]))
